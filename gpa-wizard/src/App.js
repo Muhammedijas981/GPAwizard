@@ -9,17 +9,17 @@ function App() {
   // const [showComponent, setShowComponent] = useState(false);
   const [showSgpa, setShowSgpa] = useState(false);
   const [showCgpa, setShowCgpa] = useState(true);
-  const [buttonText, setButtonText] = useState('SGPA');
+  const [buttonText, setButtonText] = useState('CGPA');
 
   const handleClick = () => {
-    if (buttonText === 'SGPA') {
+    if (buttonText === 'CGPA') {
       setShowSgpa(true);
       setShowCgpa(false);
-      setButtonText('CGPA');
+      setButtonText('SGPA');
     } else {
       setShowSgpa(false);
       setShowCgpa(true);
-      setButtonText('SGPA');
+      setButtonText('CGPA');
     }
   };
 

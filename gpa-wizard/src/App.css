@@ -49,11 +49,11 @@ p {
   height: 40px;
   width: 120px;
   border-radius: 12px;
-  background-color: blueviolet;
+  background-color: white;
   justify-content: center;
   align-items: center;
   display: flex; 
 }
 .button:hover {
-  background-color: whitesmoke    ;
+  background-color: rgb(188, 184, 184)    ;
 }

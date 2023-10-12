@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Theme, useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Input from '../../Components/Input';
 import './style.css';
 
 const Sgpa = () => {
@@ -15,67 +17,146 @@ const Sgpa = () => {
       style: {
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
         width: 250,
+        backgroundColor: 'white',
       },
     },
   };
 
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+  
+
+  const departments = [
+    'CSE',
+    'EC',
+    'EEE',
+    'ME',
+    'CE'
   ];
 
-  const getStyles = (name, selectedNames, theme) => ({
-    fontWeight:
-      selectedNames.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  });
+  const semesters = [
+    'Semester 1',
+    'Semester 2',
+    'Semester 3',
+    'Semester 4',
+    'Semester 4',
+    'Semester 5',
+    'Semester 6',
+    'Semester 7',
+    'Semester 8',
+  ];
+  // Initialize the state with an empty string instead of undefined
+  const [department, setdepartment] = React.useState('');
+  const [semester, setSemesters] = React.useState('');
 
-  const theme = useTheme();
-  const [selectedName, setSelectedName] = useState(''); // Changed to a single string
+  const depHandleChange = (event) => { // Remove type annotation
+    setdepartment(event.target.value);
+  };
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedName(value); // Set a single string value
+  const semHandleChange = (event) => {
+    setSemesters(event.target.value);
+  };
+
+  const [renderComponent, setRenderComponent] = useState(false);
+  const handleButtonClick = () => {
+    // Hide the current component
+    setRenderComponent(false);
+
+    // Get the reference to the current component
+    const currentComponent = document.querySelector('.main');
+
+    // Hide the current component by setting its display property to none
+    currentComponent.style.display = 'none';
   };
 
   return (
     <div className="main">
-      <div className='pass'><h1 style={{color:'white'}}>This is sgpa calculator</h1></div>
-      <div>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-single-name-label">Name</InputLabel>
-          <Select
-            labelId="demo-single-name-label"
-            id="demo-single-name"
-            multiple={false} // Set to false to accept a single value
-            value={selectedName} // Use a single value
-            onChange={handleChange}
-            input={<OutlinedInput label="Name" sx={{ color: 'blue' }} />}
-            MenuProps={MenuProps}
+      <div style={{ display: 'flex', flex: '1' }}></div>
+      <div className='input-box'>
+        <div>
+          <FormControl
+            sx={{
+              m: 1,
+              width: 300,
+              border: '1px solid gray',
+              borderRadius: '5px',
+            }}
           >
-            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, [selectedName], theme)} // Pass a single value in an array
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <InputLabel
+              id="demo-single-name-label"
+              style={{
+                color: 'white',
+              }}
+            >
+              Branch
+            </InputLabel>
+            <Select
+              labelId="demo-single-name-label"
+              id="demo-single-name"
+              value={department}
+              onChange={depHandleChange}
+              input={
+                <OutlinedInput
+                  label="Department"
+                />
+              }
+              MenuProps={MenuProps}
+              sx={{
+                color: 'white'
+              }}
+            >
+              {departments.map((departments) => (
+                <MenuItem key={departments} value={departments}>
+                  {departments}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div>
+          <FormControl
+            sx={{
+              m: 1,
+              width: 300,
+              border: '1px solid gray',
+              borderRadius: '5px',
+            }}
+          >
+            <InputLabel
+              id="demo-single-name-label"
+              style={{
+                color: 'white',
+              }}
+            >
+              Semester
+            </InputLabel>
+            <Select
+              labelId="demo-single-name-label"
+              id="demo-single-name"
+              value={semester}
+              onChange={semHandleChange}
+              input={
+                <OutlinedInput
+                  label="Semester"
+                />
+              }
+              MenuProps={MenuProps}
+              sx={{
+                color: 'white'
+              }}
+            >
+              {semesters.map((semesters) => (
+                <MenuItem key={semesters} value={semesters}>
+                  {semesters}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </div>
+      <div className='submit'>
+        <Button variant="contained" onClick={handleButtonClick}>Next <ChevronRightIcon/></Button>
+      </div>
+
+      {renderComponent ? <Input /> : null}
     </div>
   );
 };
